@@ -1,6 +1,6 @@
 # Home
 
-Welcome to Garrett Docs! A Collection of developer notes
+Welcome to Garrett Docs! A collection of developer notes
 
 ## Languages
 

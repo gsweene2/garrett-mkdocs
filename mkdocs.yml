@@ -1,1 +1,5 @@
 site_name: Garrett Docs
+theme:
+    name: readthedocs
+    highlightjs: true
+    
