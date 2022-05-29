@@ -1,3 +1,3 @@
 # garrett-mkdocs
 
-(docs.garrettsweeney.com)[https://docs.garrettsweeney.com/]
+[docs.garrettsweeney.com](https://docs.garrettsweeney.com/)
