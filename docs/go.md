@@ -10,9 +10,8 @@ This rst document is generated programatically from https://github.com/gsweene2/
 package main
 
 func AddThreeNumbers(n1 int, n2 int, n3 int) int {
-    return n1 + n2 + n3
+	return n1 + n2 + n3
 }
-
 ```
 
 
@@ -26,17 +25,16 @@ package main
 import "testing"
 
 func AddThreeNumbersTest(t *testing.T) {
-    n1 := 3
-    n2 := 4
-    n3 := 5
-    got := AddThreeNumbers(n1, n2, n3)
-    want := 12
+	n1 := 3
+	n2 := 4
+	n3 := 5
+	got := AddThreeNumbers(n1, n2, n3)
+	want := 12
 
-    if got != want {
-        t.Errorf("got %q want %q", got, want)
-    }
+	if got != want {
+		t.Errorf("got %q want %q", got, want)
+	}
 }
-
 ```
 
 
@@ -48,9 +46,8 @@ func AddThreeNumbersTest(t *testing.T) {
 package main
 
 func ConcatStrings(s1 string, s2 string) string {
-    return s1 + s2
+	return s1 + s2
 }
-
 ```
 
 
@@ -64,16 +61,58 @@ package main
 import "testing"
 
 func ConcatStringsTest(t *testing.T) {
-    s1 := "Concat"
-    s2 := "enation"
-    got := ConcatStrings(s1,s2)
-    want := "Concatenation"
+	s1 := "Concat"
+	s2 := "enation"
+	got := ConcatStrings(s1, s2)
+	want := "Concatenation"
 
-    if got != want {
-        t.Errorf("got %q want %q", got, want)
-    }
+	if got != want {
+		t.Errorf("got %q want %q", got, want)
+	}
+}
+```
+
+
+## diff-library.go
+
+### Example
+
+```go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+
+	"github.com/r3labs/diff"
+)
+
+func DiffLibrary() diff.Changelog {
+	from := make(map[string]map[string]string)
+	item_a_from := map[string]string{"hello": "world"}
+	from["a"] = item_a_from
+	to := make(map[string]map[string]string)
+	item_a_to := map[string]string{"hello": "world1"}
+	to["a"] = item_a_to
+
+	changelog, err := diff.Diff(from, to)
+	if err != nil {
+		fmt.Printf("err: %v\n", err)
+	}
+	return changelog
 }
 
+func main() {
+	result := DiffLibrary()
+	fmt.Printf("result: %v\n", result)
+	b, err := json.Marshal(result)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Printf("result as json: %v\n", result)
+	fmt.Println(string(b))
+}
 ```
 
 
@@ -87,9 +126,8 @@ package main
 import "fmt"
 
 func Hello() string {
-    return "Hello, Garrett"
+	return "Hello, Garrett"
 }
-
 ```
 
 
@@ -103,14 +141,13 @@ package main
 import "testing"
 
 func TestHello(t *testing.T) {
-    got := Hello()
-    want := "Hello, Garrett"
+	got := Hello()
+	want := "Hello, Garrett"
 
-    if got != want {
-        t.Errorf("got %q want %q", got, want)
-    }
+	if got != want {
+		t.Errorf("got %q want %q", got, want)
+	}
 }
-
 ```
 
 
@@ -145,10 +182,6 @@ func WriteToFile() {
 
 	f.Sync()
 }
-
-// func main() {
-//     WriteToFile()
-// }
 ```
 
 
