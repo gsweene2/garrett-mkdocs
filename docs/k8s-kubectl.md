@@ -147,3 +147,10 @@ How can I describe a service?
 ```bash
 k describe svc $SVC_NAME
 ```
+
+## jq
+
+Fetch all images from pods in the cluster
+```bash
+k get pods -o json | jq -r '.items[].spec.containers[].image
+```
