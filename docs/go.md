@@ -38,6 +38,106 @@ func AddThreeNumbersTest(t *testing.T) {
 ```
 
 
+## aws-sdk-s3.go
+
+### Example
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/s3"
+)
+
+func GetS3Client() *s3.S3 {
+	sess := session.Must(session.NewSessionWithOptions(session.Options{
+		SharedConfigState: session.SharedConfigEnable,
+	}))
+
+	svc := s3.New(sess)
+
+	return svc
+}
+
+/*
+	S3ServiceInterface created for the purpose of testing
+	When testing AwsSdkCountObjectsInBucket, I need to mock the `svc` parameter
+	If I defined `svc` of type *s3.S3, all *s3.S3 functions need to be mocked
+	By creating an interface, I can only define functions I use
+	Thus, only the functions I use have to be mocked
+	And an argument of type *s3.S3 would satisfy the interface
+*/
+type S3ServiceInterface interface {
+	ListObjectsV2(input *s3.ListObjectsV2Input) (*s3.ListObjectsV2Output, error)
+}
+
+func AwsSdkCountObjectsInBucket(svc S3ServiceInterface, bucket string) (int, error) {
+
+	resp, err := svc.ListObjectsV2(&s3.ListObjectsV2Input{Bucket: &bucket})
+
+	if err != nil {
+		fmt.Printf("Error Listing Objects: %v\n", err)
+		return -1, err
+	}
+
+	fmt.Printf("len(resp.Contents): %v\n", len(resp.Contents))
+	return len(resp.Contents), nil
+}
+
+func main() {
+	svc := GetS3Client()
+	bucket := "garretts-s3-bucket-name"
+	AwsSdkCountObjectsInBucket(svc, bucket)
+}
+```
+
+
+## aws-sdk-s3_test.go
+
+### Example
+
+```go
+package main
+
+import (
+	"testing"
+
+	"github.com/aws/aws-sdk-go/service/s3"
+)
+
+type mockS3Svc struct{}
+
+func (m *mockS3Svc) ListObjectsV2(input *s3.ListObjectsV2Input) (*s3.ListObjectsV2Output, error) {
+	name := "someBucket"
+	return &s3.ListObjectsV2Output{
+		Name: &name,
+	}, nil
+}
+
+func TestAwsSdkCountObjectsInBucket(t *testing.T) {
+	// Arrange
+	// Create mockS3Svc & ListObjectsV2
+	want := 1
+
+	// Act
+	mockSvc := mockS3Svc{}
+	got, err := AwsSdkCountObjectsInBucket(&mockSvc, "someBucket")
+
+	// Assert
+	if err != nil {
+		t.Error("Error returned")
+	}
+
+	if got != want {
+		t.Errorf("got %q want %q", got, want)
+	}
+}
+```
+
+
 ## concat-strings.go
 
 ### Example
@@ -81,7 +181,6 @@ func ConcatStringsTest(t *testing.T) {
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 
 	"github.com/r3labs/diff"
@@ -102,17 +201,17 @@ func DiffLibrary() diff.Changelog {
 	return changelog
 }
 
-func main() {
-	result := DiffLibrary()
-	fmt.Printf("result: %v\n", result)
-	b, err := json.Marshal(result)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	fmt.Printf("result as json: %v\n", result)
-	fmt.Println(string(b))
-}
+// func main() {
+// 	result := DiffLibrary()
+// 	fmt.Printf("result: %v\n", result)
+// 	b, err := json.Marshal(result)
+// 	if err != nil {
+// 		fmt.Println(err)
+// 		return
+// 	}
+// 	fmt.Printf("result as json: %v\n", result)
+// 	fmt.Println(string(b))
+// }
 ```
 
 
@@ -126,6 +225,7 @@ package main
 import "fmt"
 
 func Hello() string {
+	fmt.Printf("Hello, Garrett")
 	return "Hello, Garrett"
 }
 ```
