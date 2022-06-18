@@ -195,3 +195,72 @@ print("Goodbye Peas")
 delattr(my_meal, 'peas')
 print(f"my_meal: {my_meal}")
 ```
+
+## How can I create a new dictionary?
+
+```python
+my_dict = dict()
+```
+
+### Paste Example
+
+```python
+my_dict = dict()
+my_dict["hello"] = "world"
+print(f"my_dict: {my_dict}")
+```
+
+## How can I get a list of names (variables, obj, etc) in the current local scope?
+
+```python
+names = dir()
+```
+
+### Paste Example
+
+```python
+names = dir()
+print(f"names: {names}")
+```
+
+## Given two numbers `a` and `b`, how can I get the quotient and remainder?
+
+```python
+a, b = 21, 5
+quot, remainder = divmod(a,b)
+```
+
+### Paste Example
+
+```python
+a, b = 21, 5
+quot, remainder = divmod(a,b)
+print(f"quot: {quot}")
+print(f"remainder: {remainder}")
+```
+
+## How can I loop through a list with an index
+
+```python
+my_list = ["fall","winter","spring","summer"]
+list_of_tuples = enumerate(my_list)
+```
+
+### Paste Example
+
+```python
+for index, value in enumerate(my_list):
+    print(f"item {value} is at index {index}")
+```
+
+## How can I filter items a list that with a custom function?
+
+```python
+def function(item):
+    return True if "i" in item else False
+
+iterable = ["spring","fall","summer","winter"]
+result = filter(function, iterable)
+for i in result:
+    print(i)
+```
