@@ -8,5 +8,5 @@ Answer 1
 
 ```python
 def answer_two():
-    print("Seocond Answer")
+    print("Second Answer")
 ```
