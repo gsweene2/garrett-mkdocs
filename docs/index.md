@@ -21,6 +21,7 @@ Welcome to Garrett Docs! A collection of developer notes
 ## Utilities
 
 - [Docker](/docker)
+- [docker-compose](/docker-compose)
 - [Utilities](/utilities)
 
 ## Infra as Code
