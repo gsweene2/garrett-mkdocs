@@ -1,6 +1,7 @@
 # docker-compose
 
-References: 
+References:
+
 * Tutorial: [Get started with Docker Compose](https://docs.docker.com/compose/gettingstarted/)
 * Kitchen Sink: [Illustrative example](https://docs.docker.com/compose/compose-file/#illustrative-example)
 * Volumes & Bind Mounts: [Manage data in Docker](https://docs.docker.com/storage/)
