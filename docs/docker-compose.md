@@ -5,6 +5,7 @@ References:
 * Tutorial: [Get started with Docker Compose](https://docs.docker.com/compose/gettingstarted/)
 * Kitchen Sink: [Illustrative example](https://docs.docker.com/compose/compose-file/#illustrative-example)
 * Volumes & Bind Mounts: [Manage data in Docker](https://docs.docker.com/storage/)
+* Env Vars: [Environment variables in Compose](https://docs.docker.com/compose/environment-variables/)
 
 ## What's a sample docker-compose file look like? Say I want 2 services: web and redis, where redis uses an image from DockerHub and web is built using a local dockerfile and exposed on port 8000 with application port 5000.
 
@@ -179,3 +180,89 @@ Bind mounts
 Bind mounts
 
 > When the file or directory structure of the Docker host is guaranteed to be consistent with the bind mounts the containers require.
+
+## If I start a container with a volume that does not exist yet, what happens?
+
+Docker creates the volume for you
+
+## What command should I run to run a container using image `nginx:latest` named `devtest`, mount a volume named `myvol` on `/app`? Additionally, how can I verify the volume was created?
+
+```bash
+# Run a container in the background
+docker run -d \
+  # Name it devtest
+  --name devtest \
+  # Mount source as myvol and specify the target
+  --mount source=myvol2,target=/app \
+  # Image to create instance
+  nginx:latest
+```
+
+You can inspect the container and review the `.Mounts`
+```
+docker inspect devtest
+```
+
+## Write a docker-compose file that has a single service `frontend` that uses image `node:lts` and has a volume called `myapp` that is mounted ate `/home/node/app`
+
+```yaml
+version: "3.9"
+services:
+  # Service named frontend
+  frontend:
+    # Specify Image
+    image: node:lts
+    # Volumes specifies $NAME:$PATH
+    volumes:
+      - myapp:/home/node/app
+volumes:
+  # Create empty volume myapp
+  myapp:
+```
+
+## Say I've created a volume outside of docker compose. How can I use it in docker compose?
+
+Specify `external: true`
+```yaml
+volumes:
+  myapp:
+    external: true
+```
+
+## Give an example of how I can change the image tag docker-compose file with an environment variable
+
+```yaml
+web:
+  image: "webapp:${TAG}"
+```
+
+## If I have many environment variables, how can I pass them with docker compose?
+
+Use a `.env` file with defaults or pass with `--env-file`
+
+## In my docker-compose file, how can I be sure to throw an error if the environment variable is not defined?
+
+Unset or empty:
+```
+${VARIABLE:?err}
+```
+If unset:
+```
+${VARIABLE:err}
+```
+
+## Give an example of how I can set an environment variable `DEBUG` to `1` in a container with docker-compose
+
+```yaml
+web:
+  environment:
+    - DEBUG=1
+```
+
+## Give an example of how I can set an environment variable `DEBUG` from my shell in a container with docker-compose
+
+```yaml
+web:
+  environment:
+    - DEBUG
+```
