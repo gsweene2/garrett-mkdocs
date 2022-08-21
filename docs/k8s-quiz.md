@@ -350,7 +350,8 @@ kubectl create clusterrole pod-reader --verb=get --resource=pods --resource-name
 
 ## From the command line: Create a ClusterRole named "foo" with apiGroups specified
 
-```kubectl create clusterrole foo --verb=get,list,watch --resource=replicasets.apps
+```
+kubectl create clusterrole foo --verb=get,list,watch --resource=replicasets.apps
 ```
 
 ## From the command line: Create a ClusterRole named "foo" with subresource permissions
