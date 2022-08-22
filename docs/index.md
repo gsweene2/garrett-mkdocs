@@ -27,3 +27,7 @@ Welcome to Garrett Docs! A collection of developer notes
 ## Infra as Code
 
 - [Terraform](/terraform)
+
+## Fundamental Things
+
+- [API Protocols](/api-protocols)
