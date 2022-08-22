@@ -5,10 +5,13 @@ References:
 * https://www.redhat.com/architect/apis-soap-rest-graphql-grpc
 * https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview
 * https://www.digitalocean.com/community/tutorials/http-1-1-vs-http-2-what-s-the-difference
+* https://www.codecademy.com/article/what-is-rest
 
 ## HTTP/1.1
 
-What is it? text-based request requests
+> top-level application protocol that exchanges information between a client computer and a local or remote web server
+
+What is it? text-based request to a host server; response can be HTML page for example, stylesheets, any text
 
 Defines methods like GET, POST
 
@@ -81,11 +84,15 @@ How does a SOAP application route a request to system internals? Based on the SO
 
 Representational State Transfer
 
+It's an architectural style - think of it as a framework for HTTP requests.
+
 Relies on a standard transport protocol: HTTP
+
+The client and server don't have to know about one another - there's no contract between the two
 
 Data can be JSON, XML, CSV, RSS
 
-Function Calls: HTTP 1.1 (GET, POST, etc)
+> The basic premise is that developers use the standard HTTP methods, GET, POST, PUT and DELETE, to query and mutate resources represented by URIs on the Internet.
 
 ## gRPC
 
